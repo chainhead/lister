@@ -1,11 +1,11 @@
 var Web3 = require('web3');
 var fs = require('fs');
 //
-var web3 = new Web3(new Web3.providers.HttpProvider("http://18.xxx.xxx.xxx:8545"));
-var abiFile = fs.readFileSync('/Users/nsubrahm/wrkspc-sol/lister/lister/bin/sol/Lister.abi').toString();
+var web3 = new Web3(new Web3.providers.HttpProvider("http://ip.address:8545"));
+var abiFile = fs.readFileSync('Lister.abi').toString();
 var abiDef = JSON.parse(abiFile);
 var ListingContract = web3.eth.contract(abiDef);
-var contractInstance = ListingContract.at('0x2a30f190a7d5abd6070d9ed5ec06fb4ab410bcc0');
+var contractInstance = ListingContract.at('0xfbb9e6b82fae498191c8c984669ad4635548b9d3');
 //
 contractInstance.getAverageNumber.call(
     (err, res) => {
