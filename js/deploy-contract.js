@@ -3,9 +3,9 @@ var fs = require('fs');
 //
 var ethHttpProvider = new Web3.providers.HttpProvider("http://18.xxx.xxx.xxx:8545");
 var web3 = new Web3(ethHttpProvider);
-var abiFile = fs.readFileSync('Lister.abi').toString();
+var abiFile = fs.readFileSync('/Users/nsubrahm/wrkspc-sol/lister/lister/bin/sol/Lister.abi').toString();
 var abiDef = JSON.parse(abiFile);
-var byteCode = fs.readFileSync('Lister.bin').toString();
+var byteCode = fs.readFileSync('/Users/nsubrahm/wrkspc-sol/lister/lister/bin/sol/Lister.bin').toString();
 //
 var listContract = web3.eth.contract(abiDef);
 var deployedContract = listContract.new(['A'],
