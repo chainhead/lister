@@ -61,7 +61,7 @@ To get average, run `node test-contract-1.js` with updated IP address and contra
 
 # Known bugs
 
-1. Random number is hard-coded. Using randao is an option.
+1. Random number is hard-coded. Using `randao` is an option.
 2. Any list member can initiate addition of numbers. The addition should be initated by list owner.
 3. Calculation of average happens if all members have not provided their numbers for addition.
 4. Running total is saved on the blockchain and therefore, publicly visible.
