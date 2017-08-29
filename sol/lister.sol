@@ -31,28 +31,46 @@ contract Lister {
  
     // Add members to the ListMembers struct
     function buildList(bytes32[] listMembers) {
-        lm.members.length = listMembers.length + 1; // Will this overwrite the constructor settings? Hence, the next line.
+        lm.members.length = listMembers.length + 1; 
         for (uint i = 0; i < listMembers.length; i++) {
-            //lm.members[i+1] = listMembers[i];
             lm.members.push(listMembers[i]);
         }
     }
 
     // Add number provided by a member. If member is owner, add random number also.
+    // Addition is allowed only if owner has initiated the addition.
     function addNumber(bytes32 member, uint256 number) {
-        if (memberAdded(member) == true) {
-                return; 
-            } else {
-                addedMembers[member] = true;
-                if (memberIsOwner(member) == true) {
-                    lm.runningNumber += lm.randomNumber + number;
-                } else {
+        if (ownerAdded() == true) { // Owner has added number?
+            if (memberIsOwner(member) == true) { // Member is owner
+                // Owner cannot add number again
+                return;
+            } else { // Member is not owner
+                if (memberAdded(member) == true) { // Member has added nummber ?
+                    // Member cannot add number again
+                    return ;
+                } else { // Member has not added number
+                    // Add number to running number
                     lm.runningNumber += number;
                 }
             }
+        } else { // Owner has not added number
+            if (memberIsOwner(member) == true) { // Member is owner ?
+                // Add number and random number to running number
+                lm.runningNumber += lm.randomNumber + number;
+            } else { // Member is not owner
+                // We exit because, addition cannot be initiated until owner has added number
+                return;
+            }
+        }
     }
 
-    // Check if member has already added a number
+    // Check if list owner has added number
+    function ownerAdded() returns (bool) {
+        bool added = addedMembers[lm.members[0]];
+        return added ;
+    }
+
+    // Check if member has already added number
     function memberAdded(bytes32 member) returns (bool) {
         return addedMembers[member];
     }
@@ -60,12 +78,12 @@ contract Lister {
     // Check if member is the owner of the list
     function memberIsOwner(bytes32 member) returns (bool) {
         bool owner = true;
-
         if (lm.listOwner==member) {
             owner = true;
         } else {
             owner = false;
         }
+
         return owner;
     }
 

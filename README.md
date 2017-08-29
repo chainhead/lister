@@ -15,7 +15,10 @@ The following are the steps to be followed to interact with this contract:
 4. After all members are added, an average over this running total is calculated.
 
 # Methods
-The following is a brief description of the methods that can be invoked by a `web3.js` client.
+The following is a brief description of the methods that can be invoked by a `web3` client.
+
+## Invoked by `web3` client.
+The following methods can be invoked from the `web3` client.
 
 **`constructor`**
 
@@ -27,8 +30,11 @@ The following is a brief description of the methods that can be invoked by a `we
 
 **`getAverageNumber()`**
 
+## Helper methods
+The following methods are invoked by above methods.
+
 # Usage
-This implementation was developed with `ethereum-testrpc` deployed on an AWS EC2 instance. Therefore, the `web3.js` client uses that IP address. One can also use `http://localhost:8545` for a local installation. Start the installation with `node_modules/.bin/testrpc` from the installation location of `ethereum-testrpc`.
+This implementation was developed with `ethereum-testrpc` deployed on an AWS EC2 instance. Therefore, the `web3` client uses that IP address. One can also use `http://localhost:8545` for a local installation. Start the installation with `node_modules/.bin/testrpc` from the installation location of `ethereum-testrpc`.
 
 ## Create a new list
 After setting the IP address in `deploy-contract.js`, run `node deploy-contract.js` on command line. The output will be the address (e.g. `0x2a30f190a7d5abd6070d9ed5ec06fb4ab410bcc0`) where this contract was saved on blockchain. We now have an empty list whose owner is `A`.
@@ -38,6 +44,8 @@ In `test-contract-0.js` set the IP address of the running `ethereum-testrpc` ins
 * Addition of members to the list created above 
 * Adding numbers from each member
 * Calculation of average.
+
+**NOTE** The addition of number can be initiated only if the list owner has added a number. The `test-contract-0.js` is written in such a manner that the first addition is always by the list owner.
 
 The output will be six transaction hashes followed by one line for the console output of running total accumulated so far. The last line is the transaction hash of average calculation.
 
@@ -59,9 +67,10 @@ To get average, run `node test-contract-1.js` with updated IP address and contra
 { [String: '3600'] s: 1, e: 3, c: [ 3600 ] }
 ```
 
-# Known bugs
+# Known issues
 
-1. Random number is hard-coded. Using `randao` is an option.
-2. Any list member can initiate addition of numbers. The addition should be initated by list owner.
-3. Calculation of average happens if all members have not provided their numbers for addition.
-4. Running total is saved on the blockchain and therefore, publicly visible.
+The following issues exist and will be addressed in next or later releases.
+
+1. Providing error responses from contracts. 
+2. Random number is hard-coded. Using `randao` is an option.
+3. Running total is saved on the blockchain and therefore, publicly visible.
